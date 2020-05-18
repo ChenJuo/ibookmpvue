@@ -1,6 +1,6 @@
 function createFly() {
   if (mpvuePlatform === 'wx') {
-    const Fly = require('flyio/dist/npm/wx')
+    const Fly = require('flyio/dist/npm/wx');
     return new Fly()
   } else {
     return null
@@ -11,7 +11,7 @@ function handleError(err) {
   console.log(err)
 }
 export function get(url, params = {}) {
-  const fly = createFly()
+  const fly = createFly();
   if (fly) {
     return new Promise((resolve, reject) => {
       fly.get(url, params).then(response => {
@@ -25,7 +25,6 @@ export function get(url, params = {}) {
     })
   }
 }
-
 export function post(url, params = {}) {
   const fly = createFly()
   if (fly) {
@@ -41,3 +40,4 @@ export function post(url, params = {}) {
     })
   }
 }
+

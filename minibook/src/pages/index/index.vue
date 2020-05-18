@@ -11,9 +11,9 @@
     methods: {
       jump(){
        /* this.$router.push("/pages/index/main");*/
-       /* get('https://www.baidu.com').then(response => {
+        get('https://www.baidu.com').then(response => {
           console.log('handleResponse……')
-        })*/
+        })
       }
     }
   };
