@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "毛毛读书",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "van-button": "vant-weapp/dist/button/index"
+  }
+}
