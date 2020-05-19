@@ -5,7 +5,7 @@
       @onClick="onSearchBarkClick"
     />
     <ImageView
-      src="https://www.youbaobao.xyz/mpvue-res/logo.jpg"
+      src="https://www.youbaobao.xyz/mpvue-res/big.jpg"
     />
   </div>
 </template>

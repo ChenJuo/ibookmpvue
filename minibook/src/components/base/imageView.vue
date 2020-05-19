@@ -4,9 +4,18 @@
     :class="round ? 'round image' : 'image'"
     :style="{height}"
     :src="src"
+    :mode="mode"
     :lazy-load="lazyLoad"
     @load="onLoad"
-    @error="onError"/>
+    @error="onError"
+    v-show="!isLoading && !error"/>
+    <img
+      :class="round ? 'round image' : 'image'"
+      :style="{height}"
+       src="https://www.youbaobao.xyz/book/img/loading2.ae9e5924.jpeg"
+      :mode="mode"
+      :lazy-load="lazyLoad"
+      v-show="isLoading || error"/>
   </div>
 </template>
 
@@ -64,6 +73,14 @@
   };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .image-view{
+    width: 100%;
+    .image{
+      width: 100%;
+      &.round{
+        border-radius: 50%;
+      }
+    }
+  }
 </style>
