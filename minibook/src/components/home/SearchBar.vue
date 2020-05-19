@@ -11,9 +11,11 @@
        @change="onChange"
        confirm-type="search"
        @confirm="onConfirm"
+       placeholder-style="color: #ADB4BE"
       />
-      <van-icon class="clear" name="clear" size="16px" color="#858c96"
-      @click="onClearClick"></van-icon>
+      <van-icon class="clear" name="clear" size="16px" color="#ccc"
+      @click="onClearClick"
+      v-if="searchWord.length > 0"></van-icon>
     </div>
   </div>
 </template>
