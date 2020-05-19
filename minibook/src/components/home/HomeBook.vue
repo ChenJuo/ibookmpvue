@@ -3,11 +3,20 @@
     <div class="home-book-header">{{title}}</div>
     <div class="home-book-content">
       <div class="home-book-row" v-for="(item,index) in bookData" :key="index">
-        <div class="home-book-col" v-for="(book,bookIndex) in item" :key="bookIndex">
-          <div class="book-wrapper" :style="{flex : '0 0 '+(100/col)+'%'}">
+        <div class="home-book-col" v-for="(book,bookIndex) in item" :key="bookIndex"
+             :style="{flex : '0 0 '+(100/col)+'%'}" >
+          <div
+            class="book-wrapper"
+            :style="{flexDirection: mode === HOME_BOOK_MODE.COL ? 'column' : 'row'}"
+          >
             <ImageView :src="book.cover"/>
-            <div class="book-title-wrapper book-title-col">
+            <div class="book-title-wrapper book-title-col" v-if="mode === HOME_BOOK_MODE.COL">
                 <div class="book-title">{{book.title}}</div>
+            </div>
+            <div class="book-title-wrapper book-title-row" v-else>
+              <div class="book-title">{{book.title}}</div>
+              <div class="book-author">{{book.author}}</div>
+              <div class="book-category">{{book.category}}</div>
             </div>
           </div>
         </div>
@@ -59,6 +68,9 @@
       console.log(this.bookData)
     },
     computed: {
+      HOME_BOOK_MODE(){
+        return HOME_BOOK_MODE
+      },
       bookData() {
         const { data, row, col } = this;
         if (data && data.length > 0) {
@@ -94,13 +106,18 @@
     }
     .home-book-content {
       padding: 0 12px;
-      margin-top: 22.5px;
+      margin-top: 10.5px;
+
       .home-book-row{
         display: flex;
         flex-flow: row nowrap;
+        margin-top: 12px;
+
         .home-book-col{
           padding: 0 8px;
+          box-sizing: border-box;
           .book-wrapper{
+            display: flex;
             .book-title-wrapper{
               &.book-title-col{
                 .book-title{
@@ -109,6 +126,34 @@
                   line-height: 16.5px;
                   max-height: 33px;
                   font-weight: 500;
+                  overflow: hidden;
+                  word-break: break-word;
+                }
+              }
+              &.book-title-row{
+                flex:0 0 50%;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .book-title{
+                  font-size: 14px;
+                  color: #1f1f1f;
+                  line-height: 18px;
+                  max-height: 36px;
+                  overflow: hidden;
+                  word-break: break-word;
+                }
+                .book-author{
+                  font-size: 12px;
+                  color: #868686;
+                  line-height: 18px;
+                  max-height: 36px;
+                  overflow: hidden;
+                  word-break: break-word;
+                }
+                .book-category{
+
                 }
               }
             }

@@ -14,8 +14,9 @@
     <div class="book-home">
       <HomeBook
         title="为你推荐"
-        :row="1"
-        :col="3"
+        :row="2"
+        :col="2"
+        mode="row"
         :data="hotBook"
       />
     </div>
