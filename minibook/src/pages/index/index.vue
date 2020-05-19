@@ -1,28 +1,21 @@
 <template>
-  <div>
-    <span class="msg">Hello World</span>
-    <van-button type="primary" @click="jump">按钮</van-button>
+  <div class="home">
+    <SearchBar />
   </div>
 </template>
 
 <script>
-  import{ get } from '../../utils/request'
+  import SearchBar from '../../components/home/SearchBar'
   export default {
+    components:{
+      SearchBar
+    },
     methods: {
-      jump(){
-       /* this.$router.push("/pages/index/main");*/
-        get('https://www.baidu.com').then(response => {
-          console.log('handleResponse……')
-        })
-      }
+
     }
   };
 </script>
 
 <style lang="scss" scoped>
-  .msg {
-    color: red;
-    font-size: 20px;
-    font-weight: bold;
-  }
+
 </style>
