@@ -62,12 +62,12 @@
       onLoad(){
         this.isLoading = false
         this.error = false
-        console.log('onload')
+
       },
       onError(){
         this.error = true
         this.isLoading = false
-        console.log('onerror')
+
       }
     }
   };
