@@ -15,23 +15,32 @@
         </div>
         <div class="book-info">
             <div class="book-wrapper">
-              <ImageView
-                src="https://www.youbaobao.xyz/book/res/img//EarthSciences/978-981-10-3713-9_CoverFigure.jpg"
-              />
-              <ImageView
-                src="https://www.youbaobao.xyz/book/res/img//EarthSciences/978-981-10-3713-9_CoverFigure.jpg"
-              />
-              <ImageView
-                src="https://www.youbaobao.xyz/book/res/img//EarthSciences/978-981-10-3713-9_CoverFigure.jpg"
-              />
+              <div class="book-img-wrapper">
+                <ImageView
+                  src="https://www.youbaobao.xyz/book/res/img//EarthSciences/978-981-10-3713-9_CoverFigure.jpg"
+                />
+              </div><div class="book-img-wrapper">
+                <ImageView
+                  src="https://www.youbaobao.xyz/book/res/img//EarthSciences/978-981-10-3713-9_CoverFigure.jpg"
+                />
+              </div><div class="book-img-wrapper">
+                <ImageView
+                  src="https://www.youbaobao.xyz/book/res/img//EarthSciences/978-981-10-3713-9_CoverFigure.jpg"
+                />
+              </div>
             </div>
             <div class="shelf-wrapper">
                 <div class="shelf">书架</div>
-                <van-icon class="arrow" name="arrow"></van-icon>
+                <van-icon
+                  class="arrow"
+                  name="arrow"
+                  size="11px"
+                  color="#828489"
+                ></van-icon>
             </div>
         </div>
-        <div class="feedback-wrapper">
-
+        <div class="feedback-wrapper" @click="onFeedBackClick">
+            反馈
         </div>
       </div>
     </div>
@@ -63,6 +72,9 @@
       sign(){
 
       },
+      onFeedBackClick(){
+
+      }
     }
   };
 </script>
@@ -73,6 +85,7 @@
     border-radius:15px;
     margin: 22px 20px 0;
     .home-card-inner{
+      position: relative;
       padding: 21.5px 17px 20px 20px;
       box-sizing: border-box;
       .user-info{
@@ -102,17 +115,42 @@
       }
       .book-info{
         display: flex;
+        margin-top: 16.5px;
+
         .book-wrapper{
           flex: 1;
           display: flex;
+          justify-content: space-around;
+          .book-img-wrapper{
+            width: 72px;
+            height: 101px;
+          }
         }
         .shelf-wrapper{
           display: flex;
           align-items: center;
+          .shelf{
+            width: 11px;
+            font-size: 11px;
+            word-break: break-word;
+            color: #fff;
+            opacity: 0.8;
+          }
         }
       }
       .feedback-wrapper{
-
+        position: absolute;
+        right: 0px;
+        top:19.5px;
+        width: 44.5px;
+        height: 23.5px;
+        line-height: 23.5px;
+        text-align: center;
+        background: #707070;
+        opacity: 0.9;
+        border-radius: 100px 0 0 100px;
+        color: #fff;
+        font-size: 11px;
       }
     }
   }
