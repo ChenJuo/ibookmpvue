@@ -43,11 +43,13 @@
             反馈
         </div>
       </div>
+      <van-dialog id="van-dialog"></van-dialog>
     </div>
 </template>
 
 <script>
   import ImageView from "../base/imageView";
+  import Dialog from 'vant-weapp/dist/dialog/dialog'
   export default {
     name: "HomeCard",
     components: { ImageView },
@@ -73,7 +75,16 @@
 
       },
       onFeedBackClick(){
-
+        Dialog.confirm({
+          title:'反馈',
+          message:'您是否确认提交反馈信息？',
+          confirmButtonText:'是',
+          cancelButtonText:'否'
+        }).then(() =>{
+          console.log('点击是之后的事件')
+        }).catch(()=>{
+          console.log('点击否之后的事件')
+        })
       }
     }
   };
