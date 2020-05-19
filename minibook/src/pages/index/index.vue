@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <SearchBar />
+    <SearchBar :disable="false"/>
   </div>
 </template>
 
