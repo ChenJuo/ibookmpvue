@@ -1,15 +1,28 @@
 <template>
   <div class="home-book">
     <div class="home-book-header">{{title}}</div>
-    <div class="home-book-content">2</div>
+    <div class="home-book-content">
+      <div class="home-book-row" v-for="(item,index) in bookData" :key="index">
+        <div class="home-book-col" v-for="(book,bookIndex) in item" :key="bookIndex">
+          <div class="book-wrapper" :style="{flex : '0 0 '+(100/col)+'%'}">
+            <ImageView :src="book.cover"/>
+            <div class="book-title-wrapper book-title-col">
+                <div class="book-title">{{book.title}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="home-book-footer">3</div>
   </div>
 </template>
 <script>
   import { HOME_BOOK_MODE } from "@/utils/const";
+  import ImageView from "../base/imageView";
 
   export default {
     name: "HomeBook",
+    components: { ImageView },
     props: {
       title: String,
       data: {
@@ -80,7 +93,28 @@
       padding: 13px 0 0 20.5px;
     }
     .home-book-content {
-
+      padding: 0 12px;
+      margin-top: 22.5px;
+      .home-book-row{
+        display: flex;
+        flex-flow: row nowrap;
+        .home-book-col{
+          padding: 0 8px;
+          .book-wrapper{
+            .book-title-wrapper{
+              &.book-title-col{
+                .book-title{
+                  font-size: 12px;
+                  color: #212731;
+                  line-height: 16.5px;
+                  max-height: 33px;
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+        }
+      }
     }
     .home-book-footer {
 
