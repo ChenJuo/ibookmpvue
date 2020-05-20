@@ -11,7 +11,7 @@
        @change="onChange"
        confirm-type="search"
        @confirm="onConfirm"
-       placeholder-style="color: #ADB4BE"
+       placeholder-style="color: #ADB4BE;font-size:15px"
       />
       <van-icon class="clear" name="clear" size="16px" color="#ccc"
       @click="onClearClick"
