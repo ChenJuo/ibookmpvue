@@ -9,6 +9,7 @@
             class="book-wrapper"
             @click="onBookClick"
             :style="{flexDirection: mode === HOME_BOOK_MODE.COL ? 'column' : 'row'}"
+            v-if="mode === HOME_BOOK_MODE.COL || mode === HOME_BOOK_MODE.ROW"
           >
             <ImageView :src="book.cover"/>
             <div class="book-title-wrapper book-title-col" v-if="mode === HOME_BOOK_MODE.COL">
@@ -22,6 +23,18 @@
               </div>
             </div>
           </div>
+          <div class="category-wrapper" v-else>
+            <div class="category-text">{{book.text}}</div>
+            <div class="category-num">{{book.num}}本书</div>
+            <div class="category-img-wrapper">
+              <div class="category-img1">
+                <ImageView :src="book.cover"></ImageView>
+              </div>
+              <div class="category-img2">
+                <ImageView :src="book.cover2"></ImageView>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -31,7 +44,7 @@
   </div>
 </template>
 <script>
-  import { HOME_BOOK_MODE } from "@/utils/const";
+  import { HOME_BOOK_MODE,CATEGORY} from "@/utils/const";
   import ImageView from "../base/imageView";
 
   export default {
@@ -79,6 +92,9 @@
       bookData() {
         const { data, row, col } = this;
         if (data && data.length > 0) {
+          data.forEach(book =>{
+            book.text = CATEGORY[book.categoryText.toLowerCase()]
+          });
           const number = row * col;
           const _bookData = data.slice(0, number);
           const _bookDataRow = [];
@@ -121,6 +137,7 @@
         .home-book-col{
           padding: 0 8px;
           box-sizing: border-box;
+
           .book-wrapper{
             display: flex;
             .book-title-wrapper{
@@ -158,6 +175,51 @@
               }
             }
           }
+          .category-wrapper{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #f8f9f8;
+            border-radius: 10px;
+            height: 96px;
+            padding: 13px 0 14.5px 16px;
+            box-sizing: border-box;
+
+            .category-text{
+              width: 150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color:#212832;
+              font-size: 16px;
+              line-height: 22.5px;
+            }
+            .category-num{
+              color:#868686;
+              font-size: 12px;
+              line-height: 16.5px;
+            }
+            .category-img-wrapper{
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              .category-img1{
+                position: absolute;
+                right: 0;
+                bottom: -5px;
+                z-index: 100;
+                width: 48px;
+                border-radius: 0 0 10px 0;
+              }
+              .category-img2{
+                position: absolute;
+                right: 30px;
+                bottom: -5px;
+                z-index: 90;
+                width: 36px;
+              }
+            }
+          }
         }
       }
     }
@@ -167,6 +229,11 @@
   }
 </style>
 <style lang="scss">
+  .category-img1{
+    .image{
+      border-radius: 0 0 10px 0;
+    }
+  }
   .home-book-footer {
     .home-book-btn{
       width: 100%;
