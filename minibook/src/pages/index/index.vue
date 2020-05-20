@@ -8,7 +8,7 @@
     <HomeCard :data="homeCard" @onClick="onHomeBookClick"/>
     <HomeBanner
       img="http://www.youbaobao.xyz/book/res/bg.jpg"
-      title="鬼吹灯.龙岭迷窟上线了"
+      title="《鬼吹灯.龙岭迷窟》上线了"
       subTitle="立即体验"
       @onClick="onBannerClick"
       @onBookClick="onHomeBookClick"
@@ -125,6 +125,8 @@
               nickname:'米老鼠'
             }
           }
+        }).cache(err => {
+          console.log('捕获异常',err)
         })
       },
       onSearchBarkClick(){
