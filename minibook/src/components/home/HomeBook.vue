@@ -7,6 +7,7 @@
              :style="{flex : '0 0 '+(100/col)+'%'}" >
           <div
             class="book-wrapper"
+            @click="onBookClick"
             :style="{flexDirection: mode === HOME_BOOK_MODE.COL ? 'column' : 'row'}"
           >
             <ImageView :src="book.cover"/>
@@ -15,14 +16,18 @@
             </div>
             <div class="book-title-wrapper book-title-row" v-else>
               <div class="book-title">{{book.title}}</div>
-              <div class="book-author">{{book.author}}</div>
-              <div class="book-category">{{book.category}}</div>
+              <div class="book-title-author-wrapper">
+                <div class="book-title book-author">{{book.author}}</div>
+                <div class="book-title book-author">{{book.category}}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="home-book-footer">3</div>
+    <div class="home-book-footer" v-if="showBtn" @click="onMoreClick">
+      <van-button round custom-class="home-book-btn">{{btnText}}</van-button>
+    </div>
   </div>
 </template>
 <script>
@@ -90,10 +95,10 @@
     },
     methods: {
       onMoreClick() {
-
+        this.$emit('onMoreClick')
       },
       onBookClick() {
-
+        this.$emit('onBookClick')
       }
     }
   };
@@ -147,13 +152,8 @@
                 .book-author{
                   font-size: 12px;
                   color: #868686;
-                  line-height: 18px;
-                  max-height: 36px;
-                  overflow: hidden;
-                  word-break: break-word;
-                }
-                .book-category{
-
+                  line-height: 14px;
+                  max-height: 14px;
                 }
               }
             }
@@ -162,7 +162,17 @@
       }
     }
     .home-book-footer {
-
+      padding: 12px 20px 20px;
+    }
+  }
+</style>
+<style lang="scss">
+  .home-book-footer {
+    .home-book-btn{
+      width: 100%;
+      font-size: 14px;
+      color:#3696ef;
+      border:1px solid #edeeee;
     }
   }
 </style>

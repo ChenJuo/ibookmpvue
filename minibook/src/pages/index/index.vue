@@ -10,6 +10,7 @@
       title="mpvue2.0实战多端小程序上线啦"
       subTitle="立即体验"
       @onClick="onBannerClick"
+      @onBookClick="onHomeBookClick"
     />
     <div class="book-home">
       <HomeBook
@@ -17,7 +18,10 @@
         :row="2"
         :col="2"
         mode="row"
+        btn-text="更多"
         :data="hotBook"
+        @onMoreClick="onMoreClick"
+        @onBookClick="onHomeBookClick"
       />
     </div>
   </div>
@@ -101,6 +105,12 @@
       },
       onBannerClick(){
         console.log('banner click……')
+      },
+      onMoreClick(){
+        console.log('onMore click……')
+      },
+      onHomeBookClick(){
+        console.log('onHomeBookClick click……')
       }
     }
   };
