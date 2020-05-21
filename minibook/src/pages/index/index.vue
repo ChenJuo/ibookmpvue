@@ -73,7 +73,7 @@
   import HomeCard from "../../components/home/HomeCard";
   import HomeBanner from "../../components/home/HomeBanner";
   import HomeBook from "../../components/home/HomeBook";
-  import {getHomeData,recommend,freeRead,hotBook} from "../../api";
+  import { getHomeData, recommend, freeRead, hotBook, register } from "../../api";
   import {getSetting,getUserInfo,getStorageSync,setStorageSync,getUserOpenId} from "../../api/wechat";
   import Auth from "../../components/base/Auth";
 
@@ -118,7 +118,7 @@
             break
         }
       },
-      getHomeData(openId){
+      getHomeData(openId,userInfo){
         getHomeData({openId}).then(res =>{
           const {
             data:{
@@ -143,10 +143,7 @@
           this.homeCard = {
             bookList:shelf,
             num:shelfCount,
-            userInfo:{
-              avatar:'https://www.youbaobao.xyz/mpvue-res/logo.jpg',
-              nickname:'米老鼠'
-            }
+            userInfo
           }
         })
       },
@@ -161,8 +158,9 @@
         console.log('onHomeBookClick click……')
       },
       getUserInfo(){
-        const onOpenIdComplete =(openId) =>{
-            this.getHomeData(openId)
+        const onOpenIdComplete =(openId,userInfo) =>{
+            this.getHomeData(openId,userInfo)//获取首页数据
+            register(openId,userInfo)
         };
         getUserInfo(
           (userInfo)=>{
@@ -171,10 +169,10 @@
             const openId = getStorageSync('openId')
             if(!openId || openId.length === 0){
               //未获得openId通过getUserOpenId获得
-              getUserOpenId(onOpenIdComplete)
+              getUserOpenId(openId=> onOpenIdComplete(openId,userInfo))
             }else{
               //已获得openId
-              onOpenIdComplete(openId)
+              onOpenIdComplete(openId,userInfo)
             }
         },
           ()=>{
