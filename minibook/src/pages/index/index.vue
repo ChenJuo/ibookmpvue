@@ -63,7 +63,7 @@
         />
       </div>
     </div>
-    <Auth v-if="!isAuth" @getUserInfo = "init"/>
+    <Auth @getUserInfo = "init" v-if="!isAuth"/>
   </div>
 </template>
 
@@ -74,7 +74,7 @@
   import HomeBanner from "../../components/home/HomeBanner";
   import HomeBook from "../../components/home/HomeBook";
   import { getHomeData, recommend, freeRead, hotBook, register } from "../../api";
-  import {getSetting,getUserInfo,getStorageSync,setStorageSync,getUserOpenId} from "../../api/wechat";
+  import {getSetting,getUserInfo,getStorageSync,setStorageSync,getUserOpenId,showLoading,hideLoading} from "../../api/wechat";
   import Auth from "../../components/base/Auth";
 
   export default {
@@ -144,7 +144,12 @@
             bookList:shelf,
             num:shelfCount,
             userInfo
-          }
+          };
+          //关闭loading
+          hideLoading()
+        }).catch(() =>{
+          //关闭loading
+          hideLoading()
         })
       },
       onSearchBarkClick(){
@@ -184,6 +189,8 @@
         getSetting('userInfo',
         () =>{
           this.isAuth = true;
+          //获得授权之后，请求首页数据时开始loading
+          showLoading('正在加载');
           this.getUserInfo()
         },
         () =>{
@@ -191,7 +198,7 @@
         })
       },
       init(){
-        this.getSetting()
+        this.getSetting();
       }
     },
     mounted(){

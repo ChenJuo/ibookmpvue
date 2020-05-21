@@ -5,7 +5,7 @@
         <div class="auth-img">
           <ImageView round src="https://www.youbaobao.xyz/mpvue-res/logo.jpg" height="100%" mode="scaleToFill"/>
         </div>
-        <div class="sub-title">登陆小慕读书</div>
+        <div class="sub-title">登陆毛毛读书</div>
         <div class="title">全球好书免费读</div>
       </div>
       <button class="auth-btn"
