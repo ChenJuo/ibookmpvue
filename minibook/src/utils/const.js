@@ -1,3 +1,5 @@
+export const APP_ID = 'wx6668987492a0eaa9';
+export const APP_SECRET = '6594abbb5fd0eceb0a303405e70da316';
 export const HOME_BOOK_MODE = {
   ROW:'row',
   COL:'col',

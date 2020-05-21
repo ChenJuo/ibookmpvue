@@ -1,66 +1,69 @@
 <template>
-  <div class="home">
-    <SearchBar
-      disable
-      @onClick="onSearchBarkClick"
-      :hot-search="hotSearch"
-    />
-    <HomeCard :data="homeCard" @onClick="onHomeBookClick"/>
-    <HomeBanner
-      img="http://www.youbaobao.xyz/book/res/bg.jpg"
-      title="《鬼吹灯.龙岭迷窟》上线了"
-      subTitle="立即体验"
-      @onClick="onBannerClick"
-      @onBookClick="onHomeBookClick"
-    />
-    <div class="book-home">
-      <HomeBook
-        title="为你推荐"
-        :row="1"
-        :col="3"
-        mode="col"
-        btn-text="换一批"
-        :data="recommend"
-        @onMoreClick="recommendChange('recommend')"
+  <div>
+    <div class="home" v-if="isAuth">
+      <SearchBar
+        disable
+        @onClick="onSearchBarkClick"
+        :hot-search="hotSearch"
+      />
+      <HomeCard :data="homeCard" @onClick="onHomeBookClick"/>
+      <HomeBanner
+        img="http://www.youbaobao.xyz/book/res/bg.jpg"
+        title="《鬼吹灯.龙岭迷窟》上线了"
+        subTitle="立即体验"
+        @onClick="onBannerClick"
         @onBookClick="onHomeBookClick"
       />
+      <div class="book-home">
+        <HomeBook
+          title="为你推荐"
+          :row="1"
+          :col="3"
+          mode="col"
+          btn-text="换一批"
+          :data="recommend"
+          @onMoreClick="recommendChange('recommend')"
+          @onBookClick="onHomeBookClick"
+        />
+      </div>
+      <div class="book-home">
+        <HomeBook
+          title="免费阅读"
+          :row="2"
+          :col="2"
+          mode="row"
+          btn-text="换一批"
+          :data="freeRead"
+          @onMoreClick="recommendChange('freeRead')"
+          @onBookClick="onHomeBookClick"
+        />
+      </div>
+      <div class="book-home">
+        <HomeBook
+          title="当前最热"
+          :row="1"
+          :col="4"
+          mode="col"
+          btn-text="换一批"
+          :data="hotBook"
+          @onMoreClick="recommendChange('hotBook')"
+          @onBookClick="onHomeBookClick"
+        />
+      </div>
+      <div class="book-home">
+        <HomeBook
+          title="分类"
+          :row="3"
+          :col="2"
+          mode="category"
+          btn-text="查看全部"
+          :data="category"
+          @onMoreClick="onCategoryMoreClick"
+          @onBookClick="onHomeBookClick"
+        />
+      </div>
     </div>
-    <div class="book-home">
-      <HomeBook
-        title="免费阅读"
-        :row="2"
-        :col="2"
-        mode="row"
-        btn-text="换一批"
-        :data="freeRead"
-        @onMoreClick="recommendChange('freeRead')"
-        @onBookClick="onHomeBookClick"
-      />
-    </div>
-    <div class="book-home">
-      <HomeBook
-        title="当前最热"
-        :row="1"
-        :col="4"
-        mode="col"
-        btn-text="换一批"
-        :data="hotBook"
-        @onMoreClick="recommendChange('hotBook')"
-        @onBookClick="onHomeBookClick"
-      />
-    </div>
-    <div class="book-home">
-      <HomeBook
-        title="分类"
-        :row="3"
-        :col="2"
-        mode="category"
-        btn-text="查看全部"
-        :data="category"
-        @onMoreClick="onCategoryMoreClick"
-        @onBookClick="onHomeBookClick"
-      />
-    </div>
+    <Auth v-if="!isAuth" @getUserInfo = "init"/>
   </div>
 </template>
 
@@ -71,9 +74,12 @@
   import HomeBanner from "../../components/home/HomeBanner";
   import HomeBook from "../../components/home/HomeBook";
   import {getHomeData,recommend,freeRead,hotBook} from "../../api";
+  import {getSetting,getUserInfo,getStorageSync,setStorageSync,getUserOpenId} from "../../api/wechat";
+  import Auth from "../../components/base/Auth";
 
   export default {
     components:{
+      Auth,
       HomeBook,
       HomeBanner,
       HomeCard,
@@ -88,11 +94,9 @@
         recommend:[],
         freeRead:[],
         hotBook:[],
-        category:[]
+        category:[],
+        isAuth:true
       }
-    },
-    mounted(){
-      this.getHomeData()
     },
     methods: {
       recommendChange(key){
@@ -114,8 +118,8 @@
             break
         }
       },
-      getHomeData(){
-        getHomeData({openId:'1234'}).then(res =>{
+      getHomeData(openId){
+        getHomeData({openId}).then(res =>{
           const {
             data:{
               hotSearch:{
@@ -155,8 +159,46 @@
       onCategoryMoreClick(){},
       onHomeBookClick(){
         console.log('onHomeBookClick click……')
+      },
+      getUserInfo(){
+        const onOpenIdComplete =(openId) =>{
+            this.getHomeData(openId)
+        };
+        getUserInfo(
+          (userInfo)=>{
+            console.log(userInfo);
+            setStorageSync('userInfo',userInfo)
+            const openId = getStorageSync('openId')
+            if(!openId || openId.length === 0){
+              //未获得openId通过getUserOpenId获得
+              getUserOpenId(onOpenIdComplete)
+            }else{
+              //已获得openId
+              onOpenIdComplete(openId)
+            }
+        },
+          ()=>{
+            console.log('failed……')//获取用户信息，抛出异常
+          }
+        )
+      },
+      getSetting(onSuccess,onFail){
+        getSetting('userInfo',
+        () =>{
+          this.isAuth = true;
+          this.getUserInfo()
+        },
+        () =>{
+          this.isAuth = false
+        })
+      },
+      init(){
+        this.getSetting()
       }
-    }
+    },
+    mounted(){
+      this.init()
+    },
   };
 </script>
 

@@ -83,7 +83,7 @@
       }
     },
     mounted(){
-      console.log(this.bookData)
+
     },
     computed: {
       HOME_BOOK_MODE(){
