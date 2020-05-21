@@ -21,7 +21,7 @@
         mode="col"
         btn-text="换一批"
         :data="recommend"
-        @onMoreClick="onMoreClick"
+        @onMoreClick="recommendChange('recommend')"
         @onBookClick="onHomeBookClick"
       />
     </div>
@@ -33,7 +33,7 @@
         mode="row"
         btn-text="换一批"
         :data="freeRead"
-        @onMoreClick="onMoreClick"
+        @onMoreClick="recommendChange('freeRead')"
         @onBookClick="onHomeBookClick"
       />
     </div>
@@ -45,7 +45,7 @@
         mode="col"
         btn-text="换一批"
         :data="hotBook"
-        @onMoreClick="onMoreClick"
+        @onMoreClick="recommendChange('hotBook')"
         @onBookClick="onHomeBookClick"
       />
     </div>
@@ -57,7 +57,7 @@
         mode="category"
         btn-text="查看全部"
         :data="category"
-        @onMoreClick="onMoreClick"
+        @onMoreClick="onCategoryMoreClick"
         @onBookClick="onHomeBookClick"
       />
     </div>
@@ -70,7 +70,7 @@
   import HomeCard from "../../components/home/HomeCard";
   import HomeBanner from "../../components/home/HomeBanner";
   import HomeBook from "../../components/home/HomeBook";
-  import {getHomeData} from "../../api";
+  import {getHomeData,recommend,freeRead,hotBook} from "../../api";
 
   export default {
     components:{
@@ -95,6 +95,25 @@
       this.getHomeData()
     },
     methods: {
+      recommendChange(key){
+        switch (key) {
+          case 'recommend':
+            recommend().then(res =>{
+              this.recommend = res.data.data;
+            });
+            break;
+          case  'freeRead':
+            freeRead().then(res =>{
+              this.freeRead = res.data.data;
+            });
+            break;
+          case   'hotBook':
+            hotBook().then(res =>{
+              this.hotBook = res.data.data;
+            });
+            break
+        }
+      },
       getHomeData(){
         getHomeData({openId:'1234'}).then(res =>{
           const {
@@ -125,8 +144,6 @@
               nickname:'米老鼠'
             }
           }
-        }).cache(err => {
-          console.log('捕获异常',err)
         })
       },
       onSearchBarkClick(){
@@ -135,9 +152,7 @@
       onBannerClick(){
         console.log('banner click……')
       },
-      onMoreClick(){
-        console.log('onMore click……')
-      },
+      onCategoryMoreClick(){},
       onHomeBookClick(){
         console.log('onHomeBookClick click……')
       }
