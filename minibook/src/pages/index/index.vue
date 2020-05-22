@@ -63,7 +63,7 @@
         />
       </div>
     </div>
-    <Auth @getUserInfo = "init" v-if="!isAuth"/>
+    <Auth v-if="!isAuth" @getUserInfo = "init(res)"/>
   </div>
 </template>
 
@@ -154,6 +154,12 @@
       },
       onSearchBarkClick(){
         //跳转到搜索页面
+        this.$router.push({
+          path:'/pages/search/main',
+          query:{
+            hotSearch:this.hotSearch
+          }
+        })
       },
       onBannerClick(){
         console.log('banner click……')
@@ -185,7 +191,7 @@
           }
         )
       },
-      getSetting(onSuccess,onFail){
+      getSetting(){
         getSetting('userInfo',
         () =>{
           this.isAuth = true;
@@ -197,7 +203,7 @@
           this.isAuth = false
         })
       },
-      init(){
+      init(e){
         this.getSetting();
       }
     },

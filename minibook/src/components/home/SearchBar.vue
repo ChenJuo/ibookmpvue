@@ -1,6 +1,6 @@
 <template>
   <div class="search-bar">
-    <div class="search-bar-wrapper">
+    <div class="search-bar-wrapper" @click="onSearchBarClick">
       <van-icon class="search" name="search" size="16px" color="#858c96"></van-icon>
       <input class="search-bar-input"
        :focus="focus"
@@ -86,6 +86,8 @@
       .search-bar-input{
         flex: 1;
         margin: 0 8px;
+        color: #333;
+        font-size: 15px;
       }
       .search, .clear{
         display: flex;
