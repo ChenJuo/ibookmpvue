@@ -35,7 +35,7 @@
   import SearchList from "../../components/search/SearchList";
   import SearchBar from "../../components/home/SearchBar";
   import TagGroup from "../../components/base/TagGroup";
-  import { getStorageSync, setStorageSync } from "../../api/wechat";
+  import { getStorageSync, setStorageSync, showToast} from "../../api/wechat";
   import {search,hotSearch} from "../../api";
   const KEY_HISTORY_SEARCH = 'historySearch';
   export default {
@@ -64,7 +64,8 @@
         historySearch:[],
         searchList:{},
         searchFocus:true,
-        openId:''
+        openId:'',
+        page:1
       }
     },
     mounted(){
@@ -72,8 +73,9 @@
       hotSearch().then(res =>{
         this.hotSearch = res.data.data;
       });
+      this.page = 1;
       this.hotSearchKeyword = this.$route.query.hotSearch;
-      this.historySearch = getStorageSync(KEY_HISTORY_SEARCH) ||[]
+      this.historySearch = getStorageSync(KEY_HISTORY_SEARCH) ||[];
     },
     methods:{
       onConfirm(keyword) {
@@ -85,8 +87,8 @@
           this.$refs.searchBar.setValue(keyword)
         }else{
           //如果有，就用搜索关键词发起请求
+          this.onSearch(keyword)
         }
-        this.onSearch(keyword)
         //2、将搜索结果写入历史搜索
         if(!this.historySearch.includes(keyword)){
             this.historySearch.push(keyword)
@@ -103,13 +105,15 @@
           this.searchList ={};
           return
         }
+        this.page = 1;
         this.onSearch(keyword)
 
       },
       onSearch(keyword){
         search({
           keyword,
-          openId:this.openId
+          openId:this.openId,
+          page:this.page,
         }).then(res =>{
           this.searchList = res.data.data;
         })
@@ -132,6 +136,30 @@
         this.$refs.searchBar.setValue(text);
         this.onSearch(text);
         console.log('搜索关键词')
+      }
+    },
+    onPageScroll(){
+      console.log('scroll……');
+      if(this.searchFocus){
+        this.searchFocus = false
+      }
+    },
+    onReachBottom(){
+      if(this.showList){
+        this.page++;
+        const searchWord = this.$refs.searchBar.getValue()
+        search({
+          keyword:searchWord,
+          openId:this.openId,
+          page:this.page,
+        }).then(res =>{
+          const {book} = res.data.data;
+          if(book && book.length > 0){
+            this.searchList.book.push(...book)
+          }else{
+            showToast('没有更多数据了')
+          }
+        })
       }
     }
   };
