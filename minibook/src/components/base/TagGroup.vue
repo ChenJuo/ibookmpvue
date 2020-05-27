@@ -39,6 +39,7 @@
   .tag-group-wrapper{
     margin-top: 35px;
     width: 100%;
+    padding-bottom: 10px;
     .tag-group-header{
       display: flex;
       justify-content: space-between;
