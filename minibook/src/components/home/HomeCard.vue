@@ -19,7 +19,7 @@
             <div class="book-wrapper">
               <div class="book-img-wrapper"
                    v-for="(item,index) in bookList" :key="index"
-                   @click="onBookClick"
+                   @click="onBookClick(item)"
               >
                 <ImageView
                   :src="item.cover"
@@ -76,8 +76,8 @@
       gotoShelf(){
 
       },
-      onBookClick(){
-        this.$emit('onClick')
+      onBookClick(item){
+        this.$emit('onClick',item)
       },
       sign(){
 

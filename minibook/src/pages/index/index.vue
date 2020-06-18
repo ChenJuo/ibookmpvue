@@ -165,8 +165,11 @@
         console.log('banner click……')
       },
       onCategoryMoreClick(){},
-      onHomeBookClick(){
-        console.log('onHomeBookClick click……')
+      onHomeBookClick(book){
+        console.log(book)
+        this.$router.push({
+          path: '/pages/detail/main'
+        })
       },
       getUserInfo(){
         const onOpenIdComplete =(openId,userInfo) =>{
