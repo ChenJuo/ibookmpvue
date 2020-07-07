@@ -15,6 +15,11 @@
       :contents="contents"
       @readBook="readBook"
     />
+    <DetailBottom
+      :is-in-shelf="isInShelf"
+      @handleShelf="handleShelf"
+      @readBook="readBook"
+    />
   </div>
 </template>
 
@@ -23,12 +28,15 @@
   import DetailStat from '../../components/detail/DetailStat'
   import DetailRate from "../../components/detail/DetailRate";
   import DetailContents from "../../components/detail/DetailContents";
-  import {bookDetail,bookRankSave,bookContents} from "../../api";
+  import DetailBottom from "../../components/detail/DetailBottom";
+  import {bookDetail,bookRankSave,bookContents,bookIsInShelf,bookShelfSave} from "../../api";
   import {getStorageSync} from "../../api/wechat";
+
 
 
   export default {
     components:{
+      DetailBottom,
       DetailContents,
       DetailRate,
       DetailStat,
@@ -37,10 +45,20 @@
     data(){
       return{
         book:{},
-        contents:[]
+        contents:[],
+        isInShelf:false
       }
     },
     methods:{
+      handleShelf(){
+        if(!this.isInShelf){
+          const openId = getStorageSync('openId')
+          const {fileName} = this.$route.query
+          bookShelfSave({openId,fileName}).then(() =>{
+            this.getBookIsInShelf()
+          })
+        }
+      },
       readBook(href){
         console.log(href)
       },
@@ -71,11 +89,22 @@
             this.contents = res.data.data
           })
         }
+      },
+      getBookIsInShelf(){
+        const openId = getStorageSync('openId')
+        const { fileName } = this.$route.query
+        if(openId && fileName){
+          bookIsInShelf({openId,fileName}).then(res =>{
+            const {data} =res.data
+            data.length === 0 ? this.isInShelf = false : this.isInShelf = true
+          })
+        }
       }
     },
     mounted(){
       this.getBookContents()
       this.getBookDetail()
+      this.getBookIsInShelf()
     }
   }
 </script>

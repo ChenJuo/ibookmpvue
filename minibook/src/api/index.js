@@ -55,3 +55,14 @@ export function bookContents(params) {
   return get(`${API_URL}/book/contents`,params)
 }
 
+export function bookIsInShelf(params) {
+  return get(`${API_URL}/book/shelf/get`,params)
+}
+
+export function bookShelfSave(params) {
+  return get(`${API_URL}/book/shelf/save`,{
+    shelf:JSON.stringify(params)
+  })
+}
+
+
