@@ -45,7 +45,7 @@
 </template>
 <script>
   import { HOME_BOOK_MODE,CATEGORY} from "@/utils/const";
-  import ImageView from "../base/imageView";
+  import ImageView from "../base/ImageView";
 
   export default {
     name: "HomeBook",

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import ImageView from "./imageView";
+  import ImageView from "./ImageView";
   export default {
     name: "Auth",
     components: { ImageView },

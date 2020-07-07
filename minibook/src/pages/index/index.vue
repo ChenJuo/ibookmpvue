@@ -69,7 +69,7 @@
 
 <script>
   import SearchBar from '../../components/home/SearchBar'
-  import ImageView from "../../components/base/imageView";
+  import ImageView from "../../components/base/ImageView";
   import HomeCard from "../../components/home/HomeCard";
   import HomeBanner from "../../components/home/HomeBanner";
   import HomeBook from "../../components/home/HomeBook";

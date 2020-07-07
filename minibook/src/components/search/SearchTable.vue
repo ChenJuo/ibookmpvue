@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import ImageView from "../base/imageView";
+  import ImageView from "../base/ImageView";
   export default {
     name: "SearchTable",
     components: { ImageView },

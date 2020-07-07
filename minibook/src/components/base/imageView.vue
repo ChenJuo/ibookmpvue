@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    name: "imageView",
+    name: "ImageView",
     props:{
       src:{
         type:String,
